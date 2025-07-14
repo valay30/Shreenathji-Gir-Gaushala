@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photo Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">Shreenathji Gir Gaushala</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="gallery-container">
+        <div class="header">
+            <button class="login-btn" id="loginBtn">Admin Login</button>
+            <div class="admin-badge" id="adminBadge" style="display: none;">Admin Mode</div>
+            <h1>My Photo Gallery</h1>
+            <p>Share your moments, create memories</p>
+        </div>
+
+        <div class="upload-section hidden" id="uploadSection">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📸</div>
+                <div class="upload-text">Drop your photos here or click to browse</div>
+                <div class="upload-subtext">Supports JPG, PNG, GIF formats</div>
+                <input type="file" id="fileInput" accept="image/*" multiple>
+            </div>
+        </div>
+
+        <div id="gallery" class="gallery">
+            <div class="empty-gallery">
+                <h3>No photos yet</h3>
+                <p>Photos will appear here once an admin uploads them!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="login-modal" id="loginModal">
+        <div class="login-form">
+            <h2>Admin Login</h2>
+            <div class="error-message" id="errorMessage"></div>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="button" id="submitLogin">Login</button>
+            <button type="button" class="cancel-btn" id="cancelLogin">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-close" id="modalClose">&times;</div>
+        <img id="modalImage" src="" alt="Full size image">
+    </div>
+
+    <script>
+        let photos = [];
+        let photoIdCounter = 1;
+        let isAdmin = false;
+
+        // Admin credentials (in real app, this would be handled server-side)
+        const adminCredentials = {
+            username: 'admin',
+            password: 'admin123'
+        };
+
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const gallery = document.getElementById('gallery');
+        const modal = document.getElementById('modal');
+        const modalImage = document.getElementById('modalImage');
+        const modalClose = document.getElementById('modalClose');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const adminBadge = document.getElementById('adminBadge');
+        const uploadSection = document.getElementById('uploadSection');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Login functionality
+        loginBtn.addEventListener('click', () => {
+            if (isAdmin) {
+                logout();
+            } else {
+                showLoginModal();
+            }
+        });
+
+        document.getElementById('submitLogin').addEventListener('click', handleLogin);
+        document.getElementById('cancelLogin').addEventListener('click', hideLoginModal);
+
+        // Enter key support for login
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleLogin();
+            }
+        });
+
+        function showLoginModal() {
+            loginModal.classList.add('active');
+            document.getElementById('username').focus();
+            errorMessage.textContent = '';
+        }
+
+        function hideLoginModal() {
+            loginModal.classList.remove('active');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            errorMessage.textContent = '';
+        }
+
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                isAdmin = true;
+                loginBtn.textContent = 'Logout';
+                loginBtn.classList.add('logout-btn');
+                adminBadge.style.display = 'block';
+                uploadSection.classList.remove('hidden');
+                renderGallery(); // Re-render gallery to show delete buttons
+                hideLoginModal();
+                showNotification('Welcome, Admin!', 'success');
+            } else {
+                errorMessage.textContent = 'Invalid username or password';
+                document.getElementById('password').value = '';
+            }
+        }
+
+        function logout() {
+            isAdmin = false;
+            loginBtn.textContent = 'Admin Login';
+            loginBtn.classList.remove('logout-btn');
+            adminBadge.style.display = 'none';
+            uploadSection.classList.add('hidden');
+            renderGallery(); // Re-render gallery to hide delete buttons
+            showNotification('Logged out successfully', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 10px;
+                color: white;
+                font-weight: 500;
+                z-index: 1002;
+                animation: slideIn 0.3s ease;
+                background: ${type === 'success' ? 'linear-gradient(45deg, #4CAF50, #45a049)' : 
+                           type === 'error' ? 'linear-gradient(45deg, #f44336, #da190b)' : 
+                           'linear-gradient(45deg, #2196F3, #0b7dda)'};
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Upload area click handler (only works if admin)
+        uploadArea.addEventListener('click', () => {
+            if (isAdmin) {
+                fileInput.click();
+            }
+        });
+
+        // File input change handler
+        fileInput.addEventListener('change', (e) => {
+            if (isAdmin) {
+                handleFiles(e.target.files);
+            }
+        });
+
+        // Drag and drop handlers (only works if admin)
+        uploadArea.addEventListener('dragover', (e) => {
+            if (isAdmin) {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            }
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            if (isAdmin) {
+                uploadArea.classList.remove('dragover');
+            }
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            if (isAdmin) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                handleFiles(e.dataTransfer.files);
+            }
+        });
+
+        // Handle file uploads
+        function handleFiles(files) {
+            if (!isAdmin) return;
+
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const photo = {
+                            id: photoIdCounter++,
+                            src: e.target.result,
+                            name: file.name,
+                            date: new Date().toLocaleDateString(),
+                            size: formatFileSize(file.size)
+                        };
+                        photos.push(photo);
+                        renderGallery();
+                        showNotification('Photo uploaded successfully!', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Render gallery
+        function renderGallery() {
+            if (photos.length === 0) {
+                gallery.innerHTML = `
+                    <div class="empty-gallery">
+                        <h3>No photos yet</h3>
+                        <p>${isAdmin ? 'Upload your first photo to get started!' : 'Photos will appear here once an admin uploads them!'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            gallery.innerHTML = photos.map(photo => `
+                <div class="photo-card" style="animation-delay: ${photos.indexOf(photo) * 0.1}s">
+                    <img src="${photo.src}" alt="Photo" onclick="openModal('${photo.src}')">
+                    <div class="photo-info">
+                        <div class="photo-date">Uploaded: ${photo.date}</div>
+                        ${isAdmin ? `<button class="delete-btn" onclick="deletePhoto(${photo.id})">Delete</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Delete photo (only admins can delete)
+        function deletePhoto(id) {
+            if (!isAdmin) return;
+            
+            if (confirm('Are you sure you want to delete this photo?')) {
+                photos = photos.filter(photo => photo.id !== id);
+                renderGallery();
+                showNotification('Photo deleted successfully', 'info');
+            }
+        }
+
+        // Modal functions
+        function openModal(src) {
+            modalImage.src = src;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close login modal when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                hideLoginModal();
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (modal.classList.contains('active')) {
+                    closeModal();
+                } else if (loginModal.classList.contains('active')) {
+                    hideLoginModal();
+                }
+            }
+        });
+
+        // Initialize
+        renderGallery();
+    </script>
+</body>
+</html>
