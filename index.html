@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreenathji - Pure Cow Products</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo">Shreenathji Gir Gaushala</a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Pure & Natural Cow Products</h1>
+                <p class="hero-subtitle">Experience the authentic taste of farm-fresh dairy products from our sacred cows</p>
+                <a href="#products" class="cta-button">Explore Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">Our Premium Products</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">🥛</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Fresh Cow Milk</h3>
+                        <p class="product-description">Pure, unadulterated cow milk delivered fresh daily. Rich in nutrients and natural goodness.</p>
+                        <div class="product-price">₹60/L</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🧈</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Natural Fertilizer</h3>
+                        <p class="product-description">Natural fertilizer made from organic waste like compost or cow dung. Enriches soil naturally, boosts plant growth, and is eco-friendly.</p>
+                        <div class="product-price">₹1500/bag (50 kg)</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🧀</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Dhoop Cups for Pooja</h3>
+                        <p class="product-description">Fragrant, hand-rolled dhoop cups made from natural herbs and resins. Ideal for daily pooja and spiritual rituals.</p>
+                        <div class="product-price">₹250/packet (12 pieces)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <div class="blog-header">
+                <h2 class="section-title">Latest from Our Blog</h2>
+                <div class="blog-navigation">
+                    <button class="nav-btn prev-btn" id="prevBtn" disabled>
+                        <span>‹</span>
+                    </button>
+                    <div class="blog-counter">
+                        <span id="currentSlide">1</span> / <span id="totalSlides">1</span>
+                    </div>
+                    <button class="nav-btn next-btn" id="nextBtn">
+                        <span>›</span>
+                    </button>
+                </div>
+            </div>
+            <div class="blog-slider-container">
+                <div class="blog-grid" id="blogGrid">
+                    <!-- Blog posts will be dynamically loaded here -->
+                </div>
+            </div>
+            <div class="blog-cta">
+                <a href="blog.html" class="view-all-btn">View All Posts</a>
+                <a href="blog.html" class="manage-blog-btn">Manage Blog</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Shreenathji Gau Shala</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Welcome to Shreenathji Gau Shala, where tradition meets purity. Our sacred cow shelter has been dedicated to providing the finest dairy products while maintaining the highest standards of cow care and milk quality.</p>
+                    
+                    <p>We believe in the ancient wisdom of cow rearing and follow traditional methods to ensure our cows are healthy, happy, and produce the most nutritious milk. Our products are free from artificial additives, hormones, and chemicals.</p>
+                    
+                    <p>Every product from our gau shala is made with love and devotion, carrying the blessings of our sacred cows. We are committed to sustainable farming practices and maintaining the purity that our customers deserve.</p>
+                    
+                    <p>Join us in our mission to promote healthy living through pure, natural dairy products while supporting the welfare of our beloved cows.</p>
+                </div>
+                <div class="about-image">
+                    🐄
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>📍 Shreenathji Gir Gau Shala, Gadhoda, Himatnagar, Gujarat</p>
+                    <p>📞 +91 99794 03415</p>
+                    <p>📧 <a href="mailto:shreenathjigir@gmail.com">shreenathjigir@gmail.com</a></p>
+                    <p>🕒 Open: 6:00 AM - 8:00 PM (Daily)</p>
+                    
+                    <h3 style="margin-top: 30px;">Fresh Delivery</h3>
+                    <p>We provide fresh daily delivery within 10km radius. Contact us to place an order.</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form id="whatsappForm">
+                        <div class="form-group">
+                            <label for="contactName">Name</label>
+                            <input type="text" id="contactName" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactPhone">Phone</label>
+                            <input type="tel" id="contactPhone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" name="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" name="message" required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Shreenathji Gau Shala. All rights reserved. | Pure Products, Pure Devotion</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
