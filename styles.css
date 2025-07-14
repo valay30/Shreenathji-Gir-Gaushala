@@ -1,3 +1,4 @@
+/* Universal Styles */
 * {
     margin: 0;
     padding: 0;
@@ -14,10 +15,16 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    /* padding: 100px 2rem 2rem; */
 }
 
-/* Animated gradient background */
+.gallery-container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 2rem 2rem;
+}
+
+/* Animated Gradient Background for Hero Section */
 .hero {
     background: linear-gradient(-45deg, #ff6b35, #f7931e, #ffb74d, #ff8a65);
     background-size: 400% 400%;
@@ -35,7 +42,7 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* Floating particles */
+/* Floating Particles for Hero Section */
 .particles {
     position: absolute;
     width: 100%;
@@ -57,7 +64,7 @@ body {
     50% { transform: translateY(-20px) rotate(180deg); }
 }
 
-/* Navigation */
+/* Navigation Bar */
 nav, #navbar {
     position: fixed;
     top: 0;
@@ -74,7 +81,7 @@ nav.scrolled {
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Alternative gradient navbar */
+/* Alternative Gradient Navbar */
 #navbar.gradient {
     background: linear-gradient(135deg, #ff6b35, #f7931e);
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -101,7 +108,7 @@ nav.scrolled {
     font-size: 32px;
 }
 
-/* White logo for gradient navbar */
+/* White Logo for Gradient Navbar */
 #navbar.gradient .logo {
     color: white;
 }
@@ -139,7 +146,7 @@ nav.scrolled {
     width: 100%;
 }
 
-/* White links for gradient navbar */
+/* White Links for Gradient Navbar */
 #navbar.gradient .nav-links a {
     color: white;
 }
@@ -148,7 +155,7 @@ nav.scrolled {
     color: #ffe0d1;
 }
 
-/* Hero content */
+/* Hero Content */
 .hero-content {
     color: white;
     max-width: 600px;
@@ -189,7 +196,7 @@ nav.scrolled {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Alternative CTA button style */
+/* Alternative CTA Button Style */
 .cta-button.alt {
     background: #ff6b35;
     color: white;
@@ -211,7 +218,7 @@ nav.scrolled {
     }
 }
 
-/* Alternative fade animation */
+/* Alternative Fade Animation */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -223,7 +230,7 @@ nav.scrolled {
     }
 }
 
-/* Section titles */
+/* Section Titles */
 .section-title {
     text-align: center;
     font-size: 2.5rem;
@@ -244,7 +251,7 @@ nav.scrolled {
     border-radius: 2px;
 }
 
-/* Products section */
+/* Products Section */
 .products {
     padding: 100px 0;
     background: #f8f9fa;
@@ -326,7 +333,7 @@ nav.scrolled {
     color: #ff6b35;
 }
 
-/* Blog section */
+/* Blog Section */
 .blog {
     padding: 100px 0;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -583,7 +590,7 @@ nav.scrolled {
     font-size: 1.1rem;
 }
 
-/* About section */
+/* About Section */
 .about {
     padding: 100px 0;
     background: white;
@@ -632,7 +639,7 @@ nav.scrolled {
     background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
 }
 
-/* Contact section */
+/* Contact Section */
 .contact {
     padding: 100px 0;
     background: #f8f9fa;
@@ -726,7 +733,7 @@ nav.scrolled {
     transform: translateY(-2px);
 }
 
-/* Dark contact section variant */
+/* Dark Contact Section Variant */
 .contact.dark {
     background: #333;
     color: white;
@@ -763,7 +770,422 @@ footer {
     padding: 30px 0;
 }
 
-/* Responsive design */
+/* Base Styles for Gallery/Admin Page */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+/* Navbar Styles for Gallery/Admin Page */
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+}
+
+#navbar .nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+#navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #667eea;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#navbar .logo:hover {
+    color: #764ba2;
+}
+
+#navbar .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+#navbar .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+#navbar .nav-links a:hover {
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+}
+
+/* Main Content - Add top padding to account for fixed navbar */
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.login-btn, .logout-btn {
+    position: absolute;
+    top: 20px; /* Adjusted from 0 to align with badge */
+    right: 20px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.login-btn:hover, .logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.logout-btn {
+    background: linear-gradient(45deg, #f44336, #da190b);
+}
+
+.admin-badge {
+    position: absolute;
+    top: 70px; /* Adjusted from -10px to align with login button */
+    right: 20px; /* Adjusted from 120px to align with login button */
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+}
+
+.header h1 {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.upload-section {
+    margin-bottom: 3rem;
+    background: rgba(255, 255, 255, 0.95); /* Added for consistency */
+    padding: 30px; /* Added for consistency */
+    border-radius: 15px; /* Added for consistency */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* Added for consistency */
+}
+
+.upload-section.hidden {
+    display: none;
+}
+
+.upload-area {
+    border: 3px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.upload-area:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+.upload-area.dragover {
+    border-color: #764ba2;
+    background: rgba(102, 126, 234, 0.1);
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #667eea; /* Added color */
+}
+
+.upload-text {
+    font-size: 1.2rem;
+    color: black;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.upload-subtext {
+    color: rgba(52, 43, 43, 0.7);
+    font-size: 0.9rem;
+}
+
+#fileInput {
+    display: none;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.photo-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.photo-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.photo-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.photo-card img:hover {
+    transform: scale(1.05);
+}
+
+.photo-info {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.photo-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px; /* Added margin for consistency */
+}
+
+.photo-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.delete-btn {
+    background: linear-gradient(45deg, #f44336, #da190b);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+}
+
+.empty-gallery {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    grid-column: 1 / -1;
+}
+
+.empty-gallery h3 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.empty-gallery p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+}
+
+/* Login Modal */
+.login-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1001;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.login-modal.active {
+    display: flex;
+}
+
+.login-form {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.login-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-form .cancel-btn {
+    background: #ccc;
+    color: #666;
+}
+
+.login-form .cancel-btn:hover {
+    background: #bbb;
+}
+
+.error-message {
+    color: #ff6b6b;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+/* Image Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    color: #ff6b6b;
+    transform: scale(1.1);
+}
+
+/* Shared utility classes */
+.hidden {
+    display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .nav-links {
         display: none;
@@ -806,5 +1228,22 @@ footer {
     .manage-blog-btn {
         margin-left: 0;
         margin-top: 10px;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    
+    .upload-area {
+        padding: 30px 20px;
+    }
+    
+    .admin-badge {
+        right: 80px;
     }
 }
