@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b35">
     <title>Shreenathji - Pure Cow Products</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,16 +13,24 @@
         <div class="container">
             <div class="nav-content">
                 <a href="#" class="logo">Shreenathji Gir Gaushala</a>
-                <ul class="nav-links">
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#products">Products</a></li>
-                    <li><a href="gallery.html">Galley</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
