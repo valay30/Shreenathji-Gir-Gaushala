@@ -371,3 +371,189 @@
                 this.reset();
             });
         });
+
+
+
+
+
+
+// Add this to your existing script.js file
+document.addEventListener('DOMContentLoaded', function() {
+    const orderForm = document.getElementById('orderForm');
+    const itemSelect = document.getElementById('orderItem');
+    const quantityInput = document.getElementById('orderQuantity');
+    const totalAmountDisplay = document.getElementById('totalAmount');
+    
+    // Product prices
+    const prices = {
+        'Fresh Cow Milk': 100,
+        'Natural Fertilizer': 1500,
+        'Dhoop Cups': 250
+    };
+    
+    // Function to calculate and display total
+    function calculateTotal() {
+        const selectedItem = itemSelect.value;
+        const quantity = parseFloat(quantityInput.value) || 0;
+        
+        if (!selectedItem || quantity <= 0) {
+            updateTotalDisplay(0);
+            return;
+        }
+        
+        const price = prices[selectedItem] || 0;
+        const total = price * quantity;
+        
+        updateTotalDisplay(total);
+    }
+    
+    // Function to update total display with animation
+    function updateTotalDisplay(amount) {
+        totalAmountDisplay.classList.add('updated');
+        totalAmountDisplay.textContent = amount.toLocaleString('en-IN');
+        
+        // Remove animation class after animation completes
+        setTimeout(() => {
+            totalAmountDisplay.classList.remove('updated');
+        }, 300);
+    }
+    
+    // Event listeners for real-time calculation
+    if (itemSelect && quantityInput) {
+        itemSelect.addEventListener('change', function() {
+            const selectedItem = this.value;
+            
+            // Clear previous value when changing product
+            quantityInput.value = '';
+            
+            // Set placeholder and validation based on product
+            switch(selectedItem) {
+                case 'Fresh Cow Milk':
+                    quantityInput.placeholder = 'Enter quantity in liters (e.g., 1, 2, 5)';
+                    quantityInput.step = '0.5';
+                    quantityInput.min = '0.5';
+                    break;
+                case 'Natural Fertilizer':
+                    quantityInput.placeholder = 'Enter number of bags (e.g., 1, 2, 3)';
+                    quantityInput.step = '1';
+                    quantityInput.min = '1';
+                    break;
+                case 'Dhoop Cups':
+                    quantityInput.placeholder = 'Enter number of packets (e.g., 1, 2, 3)';
+                    quantityInput.step = '1';
+                    quantityInput.min = '1';
+                    break;
+                default:
+                    quantityInput.placeholder = 'Enter quantity';
+                    quantityInput.step = '1';
+                    quantityInput.min = '1';
+            }
+            
+            calculateTotal();
+        });
+        
+        quantityInput.addEventListener('input', calculateTotal);
+        quantityInput.addEventListener('change', calculateTotal);
+    }
+    
+    // Form submission handler
+    if (orderForm) {
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(orderForm);
+            const orderData = {
+                name: formData.get('name')?.trim(),
+                phone: formData.get('phone')?.trim(),
+                item: formData.get('item'),
+                quantity: formData.get('quantity'),
+                address: formData.get('address')?.trim(),
+                notes: formData.get('notes')?.trim() || 'No special instructions'
+            };
+            
+            // Calculate total for WhatsApp message
+            const selectedItem = orderData.item;
+            const quantity = parseFloat(orderData.quantity) || 0;
+            const price = prices[selectedItem] || 0;
+            const total = price * quantity;
+            
+            // Validate required fields
+            if (!orderData.name || !orderData.phone || !orderData.item || !orderData.quantity || !orderData.address) {
+                alert('Please fill in all required fields marked with *');
+                return;
+            }
+            
+            // Validate phone number
+            const phoneRegex = /^[6-9]\d{9}$/;
+            if (!phoneRegex.test(orderData.phone.replace(/\s+/g, ''))) {
+                alert('Please enter a valid 10-digit phone number');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = orderForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Redirecting to WhatsApp...';
+            submitBtn.disabled = true;
+            
+            // Create formatted WhatsApp message with total
+            const message = `🛒 *NEW ORDER FROM WEBSITE*\n\n` +
+                          `👤 *Customer Details:*\n` +
+                          `• Name: ${orderData.name}\n` +
+                          `• Phone: ${orderData.phone}\n\n` +
+                          `📦 *Order Details:*\n` +
+                          `• Product: ${orderData.item}\n` +
+                          `• Quantity: ${orderData.quantity}\n` +
+                          `• Unit Price: ₹${price.toLocaleString('en-IN')}\n` +
+                          `• *Total Amount: ₹${total.toLocaleString('en-IN')}*\n\n` +
+                          `📍 *Delivery Address:*\n` +
+                          `${orderData.address}\n\n` +
+                          `📝 *Special Instructions:*\n` +
+                          `${orderData.notes}\n\n` +
+                          `✅ Please confirm this order.\n\n` +
+                          `🙏 Thank you for choosing Shreenathji Gir Gaushala!`;
+            
+            // Your WhatsApp number
+            const whatsappNumber = '918200321064';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp in new tab
+            const whatsappWindow = window.open(whatsappURL, '_blank');
+            
+            // Check if popup was blocked
+            if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed == 'undefined') {
+                alert('Popup blocked! Please allow popups for this site or copy the WhatsApp link manually.');
+                window.location.href = whatsappURL;
+            } else {
+                alert('Order details sent to WhatsApp! We will contact you shortly to confirm your order.');
+                orderForm.reset();
+                updateTotalDisplay(0);
+            }
+            
+            // Restore button state
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+    }
+    
+    // Auto-format phone number input
+    const phoneInput = document.getElementById('orderNumber');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 10) {
+                value = value.slice(0, 10);
+            }
+            
+            if (value.length > 5) {
+                value = value.slice(0, 5) + ' ' + value.slice(5);
+            }
+            
+            e.target.value = value;
+        });
+    }
+});

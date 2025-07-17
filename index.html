@@ -76,11 +76,97 @@
         </div>
     </section>
 
+
+    <!-- Order Section -->
+    <section class="order" id="order">
+        <div class="container">
+            <h2 class="section-title">Place Your Order</h2>
+            <div class="order-content">
+                <div class="order-info">
+                    <h3>How to Order</h3>
+                    <p>📋 Fill out the form with your details and product requirements</p>
+                    <p>📱 We'll contact you to confirm your order and delivery details</p>
+                    <p>🚚 Fresh products delivered to your doorstep within 10km radius</p>
+                    <p>💳 Payment options: Cash on delivery or online payment</p>
+                    
+                    <h3 style="margin-top: 30px;">Our Products</h3>
+                    <div class="product-list">
+                        <div class="product-item">
+                            <span class="product-name">Fresh Cow Milk</span>
+                            <span class="product-rate">₹100/L</span>
+                        </div>
+                        <div class="product-item">
+                            <span class="product-name">Natural Fertilizer</span>
+                            <span class="product-rate">₹1500/bag (50kg)</span>
+                        </div>
+                        <div class="product-item">
+                            <span class="product-name">Dhoop Cups</span>
+                            <span class="product-rate">₹250/packet (12 pieces)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-form">
+                    <h3>Order Form</h3>
+                    <form id="orderForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="orderName">Full Name *</label>
+                                <input type="text" id="orderName" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderNumber">Phone Number *</label>
+                                <input type="tel" id="orderNumber" name="phone" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orderItem">Select Product *</label>
+                            <select id="orderItem" name="item" required>
+                                <option value="">Choose a product...</option>
+                                <option value="Fresh Cow Milk">Fresh Cow Milk - ₹100/L</option>
+                                <option value="Natural Fertilizer">Natural Fertilizer - ₹1500/bag (50kg)</option>
+                                <option value="Dhoop Cups">Dhoop Cups - ₹250/packet (12 pieces)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orderQuantity">Quantity *</label>
+                            <input type="number" id="orderQuantity" name="quantity" min="1" required placeholder="Enter quantity">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orderAddress">Delivery Address *</label>
+                            <textarea id="orderAddress" name="address" required placeholder="Enter your complete address for delivery"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orderNotes">Special Instructions (Optional)</label>
+                            <textarea id="orderNotes" name="notes" placeholder="Any special requirements or delivery instructions"></textarea>
+                        </div>
+
+                        <div class="form-group total-amount-group">
+                            <label for="totalAmount">Total Amount</label>
+                            <div class="total-amount-display">
+                                <span class="currency-symbol">₹</span>
+                                <span id="totalAmount" class="total-amount">0</span>
+                            </div>
+                            <small class="total-note">*Total will be calculated automatically based on product and quantity</small>
+                        </div>
+
+                        <button type="submit" class="order-btn">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- Blog Section -->
     <section class="blog" id="blog">
         <div class="container">
             <div class="blog-header">
-                <h2 class="section-title">Latest from Our Blog</h2>
+                <h2 class="section-title">Blog</h2>
                 <div class="blog-navigation">
                     <button class="nav-btn prev-btn" id="prevBtn" disabled>
                         <span>‹</span>
