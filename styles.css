@@ -265,10 +265,11 @@ nav, #navbar {
 /* Section Titles */
 .section-title {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2.4rem;
     color: #333;
     margin-bottom: 60px;
     position: relative;
+    margin: 10px;
 }
 
 .section-title::after {
@@ -441,6 +442,8 @@ nav, #navbar {
     justify-content: center;
     font-size: 4rem;
     color: white;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .blog-image::before {
@@ -494,6 +497,8 @@ nav, #navbar {
 
 .blog-content {
     padding: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .blog-category {
@@ -1227,9 +1232,9 @@ footer {
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 }

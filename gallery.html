@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-content">
             <a href="index.html" class="logo">Shreenathji Gir Gaushala</a>
@@ -21,7 +20,7 @@
     <div class="gallery-container">
         <div class="header">
             <button class="login-btn" id="loginBtn">Admin Login</button>
-            <div class="admin-badge" id="adminBadge" style="display: none;"></div>
+            <div class="admin-badge" id="adminBadge" style="display: none;">Admin</div>
             <h1>My Photo Gallery</h1>
             <p>See the Moments, Cherish the Memories.</p>
         </div>
@@ -60,13 +59,21 @@
     </div>
 
     <script>
-        let photos = [
+        // Initial default photos (only used if no photos in localStorage)
+        const defaultPhotos = [
             { id: 1, src: 'images/a.jpg', name: 'Gir Cow 1', date: '2025-07-17', size: '150 KB' },
             { id: 2, src: 'images/b.jpg', name: 'Gir Cow 2', date: '2025-07-16', size: '200 KB' },
             { id: 3, src: 'images/c.jpg', name: 'Gir Cow 3', date: '2025-07-15', size: '180 KB' }
         ];
-        let photoIdCounter = 4;
-        let isAdmin = false;
+
+        // Load photos from localStorage or use defaults
+        let photos = JSON.parse(localStorage.getItem('shreenathji_gallery_photos')) || [...defaultPhotos];
+        
+        // Ensure photoIdCounter is always greater than the max existing ID
+        let photoIdCounter = photos.length > 0 ? Math.max(...photos.map(p => p.id)) + 1 : 1;
+
+        // Load admin status from localStorage
+        let isAdmin = localStorage.getItem('shreenathji_is_admin') === 'true';
 
         // Admin credentials (in real app, this would be handled server-side)
         const adminCredentials = {
@@ -85,6 +92,22 @@
         const adminBadge = document.getElementById('adminBadge');
         const uploadSection = document.getElementById('uploadSection');
         const errorMessage = document.getElementById('errorMessage');
+
+        // Function to update UI based on admin status
+        function updateAdminUI() {
+            if (isAdmin) {
+                loginBtn.textContent = 'Logout';
+                loginBtn.classList.add('logout-btn');
+                adminBadge.style.display = 'block';
+                uploadSection.classList.remove('hidden');
+            } else {
+                loginBtn.textContent = 'Admin Login';
+                loginBtn.classList.remove('logout-btn');
+                adminBadge.style.display = 'none';
+                uploadSection.classList.add('hidden');
+            }
+            renderGallery(); // Always re-render to show/hide delete buttons
+        }
 
         // Login functionality
         loginBtn.addEventListener('click', () => {
@@ -124,11 +147,8 @@
 
             if (username === adminCredentials.username && password === adminCredentials.password) {
                 isAdmin = true;
-                loginBtn.textContent = 'Logout';
-                loginBtn.classList.add('logout-btn');
-                adminBadge.style.display = 'block';
-                uploadSection.classList.remove('hidden');
-                renderGallery(); // Re-render gallery to show delete buttons
+                localStorage.setItem('shreenathji_is_admin', 'true'); // Persist login state
+                updateAdminUI();
                 hideLoginModal();
                 showNotification('Welcome, Admin!', 'success');
             } else {
@@ -139,11 +159,8 @@
 
         function logout() {
             isAdmin = false;
-            loginBtn.textContent = 'Admin Login';
-            loginBtn.classList.remove('logout-btn');
-            adminBadge.style.display = 'none';
-            uploadSection.classList.add('hidden');
-            renderGallery(); // Re-render gallery to hide delete buttons
+            localStorage.removeItem('shreenathji_is_admin'); // Remove login state
+            updateAdminUI();
             showNotification('Logged out successfully', 'info');
         }
 
@@ -212,24 +229,51 @@
         function handleFiles(files) {
             if (!isAdmin) return;
 
-            for (let file of files) {
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const photo = {
-                            id: photoIdCounter++,
-                            src: e.target.result,
-                            name: file.name,
-                            date: new Date().toLocaleDateString(),
-                            size: formatFileSize(file.size)
+            let filesProcessed = 0;
+            const totalFiles = files.length;
+
+            if (totalFiles === 0) return;
+
+            // Use a promise-based approach to ensure all files are processed
+            // before saving to localStorage and re-rendering
+            const filePromises = Array.from(files).map(file => {
+                return new Promise((resolve) => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const photo = {
+                                id: photoIdCounter++,
+                                src: e.target.result,
+                                name: file.name,
+                                date: new Date().toLocaleDateString(),
+                                size: formatFileSize(file.size)
+                            };
+                            photos.push(photo); // Add to the existing photos array
+                            filesProcessed++;
+                            resolve();
                         };
-                        photos.push(photo);
-                        renderGallery();
-                        showNotification('Photo uploaded successfully!', 'success');
-                    };
-                    reader.readAsDataURL(file);
+                        reader.readAsDataURL(file);
+                    } else {
+                        showNotification(`Skipped non-image file: ${file.name}`, 'error');
+                        filesProcessed++;
+                        resolve();
+                    }
+                });
+            });
+
+            Promise.all(filePromises).then(() => {
+                // Save to localStorage and re-render only after all files are processed
+                localStorage.setItem('shreenathji_gallery_photos', JSON.stringify(photos));
+                renderGallery();
+                if (filesProcessed === totalFiles) {
+                    showNotification('All selected photos uploaded successfully!', 'success');
+                } else {
+                    showNotification('Some files were not uploaded (only images are supported).', 'warning');
                 }
-            }
+            }).catch(error => {
+                console.error("Error processing files:", error);
+                showNotification('An error occurred during file upload.', 'error');
+            });
         }
 
         // Format file size
@@ -254,11 +298,11 @@
             }
 
             gallery.innerHTML = photos.map(photo => `
-                <div class="photo-card" style="animation-delay: ${photos.indexOf(photo) * 0.1}s">
-                    <img src="${photo.src}" alt="Photo" onclick="openModal('${photo.src}')">
+                <div class="photo-card">
+                    <img src="${photo.src}" alt="${photo.name || 'Gallery Photo'}" onclick="openModal('${photo.src}')">
                     <div class="photo-info">
                         <div class="photo-date">Uploaded: ${photo.date}</div>
-                        ${isAdmin && photo.id > 3 ? `<button class="delete-btn" onclick="deletePhoto(${photo.id})">Delete</button>` : ''}
+                        ${isAdmin ? `<button class="delete-btn" onclick="deletePhoto(${photo.id})">Delete</button>` : ''}
                     </div>
                 </div>
             `).join('');
@@ -270,6 +314,7 @@
             
             if (confirm('Are you sure you want to delete this photo?')) {
                 photos = photos.filter(photo => photo.id !== id);
+                localStorage.setItem('shreenathji_gallery_photos', JSON.stringify(photos)); // Persist photos after deletion
                 renderGallery();
                 showNotification('Photo deleted successfully', 'info');
             }
@@ -310,8 +355,11 @@
             }
         });
 
-        // Initialize
-        renderGallery();
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAdminUI(); // Set initial UI based on isAdmin status from localStorage
+            renderGallery(); // Render gallery with persisted photos
+        });
     </script>
 </body>
 </html>
