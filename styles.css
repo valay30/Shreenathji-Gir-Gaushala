@@ -1131,6 +1131,10 @@ footer {
         display: none;
     }
 
+    .hamburger {
+        display: flex; /* Add this line to make the hamburger visible on mobile */
+    }
+
     .hero-title {
         font-size: 2.5rem;
     }
@@ -1143,10 +1147,14 @@ footer {
     .contact-content {
         grid-template-columns: 1fr;
     }
+    .about {
+        padding: 60px 0;
+    }
 
     .about-image {
-        height: 300px;
-        font-size: 6rem;
+        height: 250px; /* Adjust height of the cow emoji box */
+        font-size: 5rem; /* Adjust emoji size */
+        border-radius: 15px; /* Slightly reduce border-radius for consistency */
     }
 
     .product-grid {
@@ -1184,11 +1192,44 @@ footer {
         right: 80px;
     }
 
+    .contact {
+        padding: 60px 0; /* Adjust vertical padding */
+    }
+
     .about-content,
     .contact-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
+        grid-template-columns: 1fr; /* Stack columns vertically */
+        gap: 40px; /* Increase gap between stacked elements */
+        padding: 0 1rem; /* Add horizontal padding to prevent content touching edges */
     }
+    .contact-info p {
+        font-size: 0.95rem; /* Adjust text size */
+        margin-bottom: 10px; /* Reduce spacing between info lines */
+    }
+    .about-text p {
+        font-size: 1rem; /* Slightly reduce font size for readability */
+        line-height: 1.7; /* Adjust line height */
+    }
+    .contact-form {
+        padding: 25px; /* Adjust padding for the form */
+        border-radius: 12px; /* Adjust border-radius */
+    }
+    .form-group label {
+        font-size: 0.95rem; /* Adjust label font size */
+    }
+    .form-group input,
+    .form-group textarea {
+        padding: 10px 12px; /* Adjust input padding */
+        font-size: 0.95rem; /* Adjust input font size */
+        border-radius: 6px; /* Adjust border-radius */
+    }
+    .submit-btn {
+        padding: 10px 25px; /* Adjust button padding */
+        font-size: 0.95rem; /* Adjust button font size */
+        border-radius: 20px; /* Adjust border-radius */
+    }
+
+
 
     .cta-button {
         padding: 12px 24px;
