@@ -286,7 +286,7 @@ nav, #navbar {
 
 /* Products Section */
 .products {
-    padding: 100px 0;
+    padding: 50px 0;
     background: #f8f9fa;
 }
 
@@ -363,7 +363,7 @@ nav, #navbar {
 
 /* Blog Section */
 .blog {
-    padding: 100px 0;
+    padding: 20px 0;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
@@ -618,7 +618,7 @@ nav, #navbar {
 
 /* About Section */
 .about {
-    padding: 100px 0;
+    padding: 50px 0;
     background: white;
 }
 
@@ -627,6 +627,7 @@ nav, #navbar {
     grid-template-columns: 2fr 1fr;
     gap: 50px;
     align-items: center;
+    margin-top: 50px;
 }
 
 .about-text {
@@ -667,7 +668,7 @@ nav, #navbar {
 
 /* Contact Section */
 .contact {
-    padding: 100px 0;
+    padding: 50px 0;
     background: #f8f9fa;
 }
 
@@ -675,6 +676,7 @@ nav, #navbar {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 50px;
+    margin-top: 50px;
 }
 
 .contact-info h3 {
